@@ -175,6 +175,13 @@ section{ padding:96px 0; position:relative; }
 .building-gallery a:nth-child(1){ aspect-ratio:3/5; }
 .building-gallery img{ width:100%; height:100%; object-fit:contain; display:block; transition:transform .4s ease; }
 .building-gallery a:hover img{ transform:scale(1.04); }
+.building-gallery.is-cover a{ aspect-ratio:4/3; }
+.building-gallery.is-cover a:nth-child(1){ aspect-ratio:auto; }
+.building-gallery.is-cover img{ object-fit:cover; }
+@media (max-width:760px){
+  .building-gallery.is-cover a{ aspect-ratio:4/3; }
+  .building-gallery.is-cover a:nth-child(1){ aspect-ratio:4/5; }
+}
 @media (max-width:760px){
   .building-gallery{ grid-template-columns:1fr 1fr; grid-template-rows:auto auto; }
   .building-gallery a{ aspect-ratio:1/1; }
@@ -387,6 +394,7 @@ footer{ background:var(--ink); color:rgba(255,255,255,0.75); padding:52px 0 28px
     <div class="quick-jump">
       <a href="#vitacon-lorena"><span class="dot"></span>Vitacon Lorena · pronto</a>
       <a href="#vitacon-bela-vista" class="is-obras"><span class="dot"></span>Vitacon Bela Vista · em obras</a>
+      <a href="#vitacon-domingos-de-morais" class="is-obras"><span class="dot"></span>Vitacon Domingos de Morais · em obras</a>
     </div>
 
     <div class="filter-group">
@@ -517,6 +525,77 @@ footer{ background:var(--ink); color:rgba(255,255,255,0.75); padding:52px 0 28px
             <p class="unit-new">R$ 492.952,43</p>
             <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20203%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener">Quero saber mais</a>
           </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="building reveal" id="vitacon-domingos-de-morais" data-status="obras">
+      <div class="building-card">
+        <div class="building-gallery is-cover">
+          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-facade.jpg" alt="Fachada Vitacon Domingos de Morais" loading="lazy"></a>
+          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-acesso.jpg" alt="Acesso Vitacon Domingos de Morais" loading="lazy"></a>
+          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-lobby.jpg" alt="Lobby e market Vitacon Domingos de Morais" loading="lazy"></a>
+          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-coworking.jpg" alt="Coworking Vitacon Domingos de Morais" loading="lazy"></a>
+          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-podcast.jpg" alt="Estúdio de podcast Vitacon Domingos de Morais" loading="lazy"></a>
+        </div>
+        <div class="building-info">
+          <div>
+            <span class="building-tag" style="color:var(--gold);background:var(--gold-bg);">Em obras · Entrega prevista 11/2028</span>
+            <h3>Vitacon Domingos de Morais <span>Vila Mariana, São Paulo</span></h3>
+            <p class="building-loc">Rua Domingos de Morais, esquina com a Rua Luís Góis, próximo ao Hospital Albert Einstein e ao Metrô Vila Mariana</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="unit-grid">
+        <div class="unit-card" data-type="studio">
+          <img class="unit-plan" src="dm-plan104.jpg" alt="Planta Unidade 104 Vitacon Domingos de Morais" loading="lazy">
+          <div class="unit-body">
+            <div class="unit-top"><span class="unit-type">R2V · 18,72 m²</span><span class="unit-badge">3% off</span></div>
+            <p class="unit-num">Unidade 104</p>
+            <p class="unit-flag">Studio com terraço</p>
+            <p class="unit-old">R$ 385.379,13</p>
+            <p class="unit-new">R$ 373.817,76</p>
+            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20104%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
+          </div>
+        </div>
+        <div class="unit-card" data-type="studio">
+          <img class="unit-plan" src="dm-plan430.jpg" alt="Planta Unidade 430 Vitacon Domingos de Morais" loading="lazy">
+          <div class="unit-body">
+            <div class="unit-top"><span class="unit-type">Studio · 30,25 m²</span><span class="unit-badge">8% off</span></div>
+            <p class="unit-num">Unidade 430</p>
+            <p class="unit-flag">Terraço amplo</p>
+            <p class="unit-old">R$ 510.321,23</p>
+            <p class="unit-new">R$ 469.495,53</p>
+            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20430%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
+          </div>
+        </div>
+        <div class="unit-card" data-type="studio">
+          <img class="unit-plan" src="dm-plan441.jpg" alt="Planta Unidade 441 Vitacon Domingos de Morais" loading="lazy">
+          <div class="unit-body">
+            <div class="unit-top"><span class="unit-type">Studio · 18,06 m²</span><span class="unit-badge">3% off</span></div>
+            <p class="unit-num">Unidade 441</p>
+            <p class="unit-flag">Studio com terraço</p>
+            <p class="unit-old">R$ 393.345,61</p>
+            <p class="unit-new">R$ 381.545,24</p>
+            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20441%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
+          </div>
+        </div>
+        <div class="unit-card" data-type="studio">
+          <img class="unit-plan" src="dm-plan1651.jpg" alt="Planta Unidade 1651 Vitacon Domingos de Morais" loading="lazy">
+          <div class="unit-body">
+            <div class="unit-top"><span class="unit-type">Studio · 18,06 m²</span><span class="unit-badge">3% off</span></div>
+            <p class="unit-num">Unidade 1651</p>
+            <p class="unit-flag">16º andar · com terraço</p>
+            <p class="unit-old">R$ 417.336,38</p>
+            <p class="unit-new">R$ 404.816,29</p>
+            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201651%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
+          </div>
+        </div>
+        <div class="tour-card">
+          <p>Book completo, tabela e simulação de fluxo de pagamento disponíveis. Peça no WhatsApp que eu te envio.</p>
+          <a href="https://wa.me/5511982380332?text=Quero%20receber%20o%20book%20e%20a%20tabela%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Pedir no WhatsApp</a>
         </div>
       </div>
     </div>
