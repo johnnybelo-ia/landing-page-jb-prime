@@ -162,6 +162,7 @@ section{ padding:96px 0; position:relative; }
 .quick-jump button:hover{ border-color:var(--gold); background:var(--gold-bg); }
 .quick-jump button .dot{ width:7px; height:7px; border-radius:50%; background:var(--emerald); flex-shrink:0; }
 .quick-jump button.is-obras .dot{ background:var(--gold); }
+.quick-jump button.is-lancamento .dot{ background:#2302ED; }
 .filter-group{ margin-bottom:18px; }
 .filter-group:last-of-type{ margin-bottom:36px; }
 .filter-label{ display:block; font-size:0.74rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-mute); margin-bottom:10px; }
@@ -269,6 +270,7 @@ section{ padding:96px 0; position:relative; }
 }
 .dev-badge.is-status.is-pronto{ background:var(--emerald); }
 .dev-badge.is-status.is-obras{ background:var(--gold); color:var(--ink); }
+.dev-badge.is-status.is-lancamento{ background:#2302ED; }
 .dev-card-body{ padding:20px 22px 22px; display:flex; flex-direction:column; gap:12px; flex:1; }
 .dev-card-body h3{ font-size:1.15rem; }
 .dev-card-loc{ font-size:.85rem; color:var(--ink-mute); margin-top:-6px; }
@@ -545,6 +547,7 @@ footer{ background:var(--ink); color:rgba(255,255,255,0.75); padding:52px 0 28px
       <button type="button" data-open-modal="modal-vitacon-lorena"><span class="dot"></span>Vitacon Lorena · pronto</button>
       <button type="button" class="is-obras" data-open-modal="modal-vitacon-bela-vista"><span class="dot"></span>Vitacon Bela Vista · em obras</button>
       <button type="button" class="is-obras" data-open-modal="modal-vitacon-domingos-de-morais"><span class="dot"></span>Vitacon Domingos de Morais · em obras</button>
+      <button type="button" class="is-lancamento" data-open-modal="modal-vitacon-joao-ramalho"><span class="dot"></span>Vitacon João Ramalho · lançamento</button>
     </div>
 
     <div class="search-panel" role="search" aria-label="Buscar imóveis">
@@ -670,6 +673,25 @@ footer{ background:var(--ink); color:rgba(255,255,255,0.75); padding:52px 0 28px
           </div>
           <div class="dev-card-footer">
             <div><p class="dev-price-label">A partir de</p><p class="dev-price">R$ <span data-stat-for="vitacon-domingos-de-morais" data-stat="price">—</span></p></div>
+            <span class="dev-card-cta">Ver detalhes</span>
+          </div>
+        </div>
+      </button>
+
+      <button class="dev-card reveal" type="button" data-open-modal="modal-vitacon-joao-ramalho">
+        <div class="dev-card-photo">
+          <img src="jr-facade.jpg" alt="Fachada Vitacon João Ramalho">
+          <div class="dev-card-badges" data-badges-for="vitacon-joao-ramalho"><span class="dev-badge is-status is-lancamento">Lançamento</span></div>
+        </div>
+        <div class="dev-card-body">
+          <h3>Vitacon João Ramalho</h3>
+          <p class="dev-card-loc">Perdizes, São Paulo/SP</p>
+          <div class="dev-specs">
+            <span><b>Área</b><span data-stat-for="vitacon-joao-ramalho" data-stat="area">—</span></span>
+            <span><b>Dormitórios</b><span data-stat-for="vitacon-joao-ramalho" data-stat="quartos">—</span></span>
+          </div>
+          <div class="dev-card-footer">
+            <div><p class="dev-price-label">Valores</p><p class="dev-price" style="font-size:1rem;">Sob consulta</p></div>
             <span class="dev-card-cta">Ver detalhes</span>
           </div>
         </div>
@@ -1005,6 +1027,124 @@ footer{ background:var(--ink); color:rgba(255,255,255,0.75); padding:52px 0 28px
               <div class="tour-card">
                 <p>Book completo, tabela e simulação de fluxo de pagamento disponíveis. Peça no WhatsApp que eu te envio.</p>
                 <a href="https://wa.me/5511982380332?text=Quero%20receber%20o%20book%20e%20a%20tabela%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Pedir no WhatsApp</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dev-modal-backdrop" id="modal-vitacon-joao-ramalho" data-building data-dif="piscina rooftop academia cokitchen games lavanderia pet bike delivery grabgo" data-status="obras">
+      <div class="dev-modal">
+        <button class="dev-modal-close" type="button" data-close-modal aria-label="Fechar">✕</button>
+        <div class="building-card">
+          <div class="building-gallery is-cover">
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener"><img src="jr-facade.jpg" alt="Fachada Vitacon João Ramalho" loading="lazy"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener"><img src="jr-acesso.jpg" alt="Acesso Vitacon João Ramalho" loading="lazy"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener"><img src="jr-lobby.jpg" alt="Lobby Vitacon João Ramalho" loading="lazy"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener"><img src="jr-pooldeck.jpg" alt="Pool deck Vitacon João Ramalho" loading="lazy"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener"><img src="jr-skybar.jpg" alt="Sky bar Vitacon João Ramalho" loading="lazy"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener"><img src="jr-fitness.jpg" alt="Fitness space Vitacon João Ramalho" loading="lazy"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener"><img src="jr-kids.jpg" alt="Kids space Vitacon João Ramalho" loading="lazy"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener"><img src="jr-petplace.jpg" alt="Pet place Vitacon João Ramalho" loading="lazy"></a>
+          </div>
+          <div class="dev-modal-pad">
+            <div class="building-info">
+              <div>
+                <span class="building-tag" style="color:#fff;background:#2302ED;">Lançamento</span>
+                <h3>Vitacon João Ramalho <span>Perdizes, São Paulo</span></h3>
+                <p class="building-loc">Rua João Ramalho, 569, Perdizes, a poucos minutos da futura Linha 6-Laranja do metrô</p>
+                <p class="dev-modal-desc">Novo lançamento da Vitacon em Perdizes, um dos bairros mais tradicionais e valorizados de São Paulo. Apartamentos de 2 e 3 suítes (subcondomínio Family), a poucos minutos de bike do Nubank Parque e da futura Linha 6-Laranja do metrô, com 16 áreas comuns do Innovation Pack, incluindo pool deck, sky bar, fitness space by Life Fitness e kids space.</p>
+              </div>
+            </div>
+
+            <p class="section-label">Características</p>
+            <div class="info-chip-grid">
+              <div class="info-chip"><p class="label">Área</p><p class="value"><span data-stat-for="vitacon-joao-ramalho" data-stat="area">—</span></p></div>
+              <div class="info-chip"><p class="label">Dormitórios</p><p class="value"><span data-stat-for="vitacon-joao-ramalho" data-stat="quartos">—</span></p></div>
+              <div class="info-chip"><p class="label">Estágio</p><p class="value">Lançamento</p></div>
+              <div class="info-chip"><p class="label">Finalidade</p><p class="value">Residencial</p></div>
+              <div class="info-chip"><p class="label">Total de Unidades</p><p class="value">56 + 1 loja</p></div>
+              <div class="info-chip"><p class="label">Qtd Andares</p><p class="value">24 + térreo + subsolo</p></div>
+            </div>
+
+            <div style="margin-top:22px;">
+              <div class="price-box">
+                <span class="label">Valores</span>
+                <span class="value" style="font-size:1.05rem;">Tabela em breve</span>
+              </div>
+              <p class="details-note" style="margin-top:10px;">Tabela de valores ainda não divulgada pela incorporadora. Chame no WhatsApp que assim que a tabela sair eu te envio em primeira mão.</p>
+            </div>
+
+            <p class="section-label">Diferenciais · 16 áreas comuns</p>
+            <ul class="amenity-list is-check"><li><strong>Pool Deck</strong>Piscina com vista para a cidade.</li><li><strong>Sky Bar</strong>Rooftop para encontros e vistas abertas.</li><li><strong>Fitness Space by Life Fitness</strong>Estrutura completa de equipamentos para treino.</li><li><strong>Kids Space</strong>Ambiente criativo e lúdico para a rotina das crianças.</li><li><strong>Game Space</strong>Espaço lúdico com games e infraestrutura para jogos online.</li><li><strong>Lobby Concierge</strong>Acesso de serviço monitorado, com vigilância ativa.</li><li><strong>Delivery Room</strong>Armários e refrigerador para guardar encomendas.</li><li><strong>Pet Place</strong>Circuito ao ar livre para convivência com o pet.</li></ul>
+            <details class="amenity-more">
+              <summary><span class="more-open">Ver todos os 16 espaços ↓</span><span class="more-close">Mostrar menos ↑</span></summary>
+              <ul class="amenity-list is-check"><li><strong>Service Access</strong>Acesso de serviço monitorado para entregas e suporte.</li><li><strong>Laundry Share</strong>Máquinas de lavar e secar com espaço de espera.</li><li><strong>Grab &amp; Go</strong>Snacks e bebidas em vending machine.</li><li><strong>Bag Keeper</strong>Guarda-volumes integrado para maior praticidade.</li><li><strong>Bike Space</strong>Espaço seguro com tomadas para modelos elétricos.</li><li><strong>Horta</strong>Estrutura com mesa de gardening para cultivos caseiros.</li><li><strong>Cokitchen Terrace</strong>Cozinha compartilhada com cooktop em ilha.</li><li><strong>Lounge</strong>Espaço de estar elegante com Wi-Fi e sonorização.</li><li><strong>Fire Place</strong>Cenário acolhedor com lareira para relaxar.</li></ul>
+            </details>
+
+            <p class="section-label">Localização · o que fica perto</p>
+            <div class="loc-grid">
+              <div class="loc-col"><h4>Transporte</h4><ul><li>Futura Linha 6-Laranja do metrô<b>ao lado</b></li><li>Nubank Parque<b>poucos min. de bike</b></li></ul></div>
+              <div class="loc-col"><h4>Bairro</h4><ul><li>Perdizes<b>3º maior IDH de São Paulo</b></li></ul></div>
+            </div>
+            <p class="details-note" style="margin-top:12px;">Tempos estimados pelo Google Maps, conforme material da incorporadora. Áreas comuns sujeitas a alterações de projeto. Perspectivas meramente ilustrativas.</p>
+
+            <p class="section-label">Tipologias · subcondomínio Family</p>
+            <div class="unit-grid">
+              <div class="unit-card" data-dest="R2V" data-quartos="2" data-suites="2" data-vagas="1" data-type="residencial">
+                <img class="unit-plan" src="jr-plan70.jpg" alt="Planta 2 suítes 70 m² Vitacon João Ramalho" loading="lazy">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 70 m²</span></div>
+                  <p class="unit-num">26 unidades · 2 suítes, 1 vaga</p>
+                  <p class="unit-flag">Padrão</p>
+                  <p class="unit-new" style="font-size:1.05rem;">Valor sob consulta</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20tipologia%20de%2070%20m%C2%B2%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="2" data-suites="2" data-vagas="1" data-type="residencial">
+                <img class="unit-plan" src="jr-plan99.jpg" alt="Planta 2 suítes garden 99 m² Vitacon João Ramalho" loading="lazy">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 99 m²</span></div>
+                  <p class="unit-num">4 unidades · 2 suítes, 1 vaga</p>
+                  <p class="unit-flag">Garden</p>
+                  <p class="unit-new" style="font-size:1.05rem;">Valor sob consulta</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20tipologia%20garden%20de%2099%20m%C2%B2%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="3" data-suites="3" data-vagas="2" data-type="residencial">
+                <img class="unit-plan" src="jr-plan107.jpg" alt="Planta 3 suítes 107 m² Vitacon João Ramalho" loading="lazy">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 107 m²</span></div>
+                  <p class="unit-num">22 unidades · 3 suítes, 2 vagas</p>
+                  <p class="unit-flag">Padrão</p>
+                  <p class="unit-new" style="font-size:1.05rem;">Valor sob consulta</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20tipologia%20de%20107%20m%C2%B2%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="3" data-suites="3" data-vagas="2" data-type="residencial">
+                <img class="unit-plan" src="jr-plan163.jpg" alt="Planta 3 suítes garden 163 m² Vitacon João Ramalho" loading="lazy">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 163 m²</span></div>
+                  <p class="unit-num">2 unidades · 3 suítes, 2 vagas</p>
+                  <p class="unit-flag">Garden</p>
+                  <p class="unit-new" style="font-size:1.05rem;">Valor sob consulta</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20tipologia%20garden%20de%20163%20m%C2%B2%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="3" data-suites="3" data-vagas="2" data-type="residencial">
+                <img class="unit-plan" src="jr-plan118.jpg" alt="Planta 3 suítes duplex 118 m² Vitacon João Ramalho" loading="lazy">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 118 m²</span></div>
+                  <p class="unit-num">2 unidades · 3 suítes, 2 vagas</p>
+                  <p class="unit-flag">Duplex</p>
+                  <p class="unit-new" style="font-size:1.05rem;">Valor sob consulta</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20tipologia%20duplex%20de%20118%20m%C2%B2%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="tour-card">
+                <p>Há ainda 1 loja de 63 m² no térreo. Book completo e tabela de valores assim que a incorporadora divulgar. Peça no WhatsApp que eu te aviso primeiro.</p>
+                <a href="https://wa.me/5511982380332?text=Quero%20receber%20o%20book%20e%20a%20tabela%20do%20Vitacon%20Jo%C3%A3o%20Ramalho" target="_blank" rel="noopener">Pedir no WhatsApp</a>
               </div>
             </div>
           </div>
