@@ -154,14 +154,14 @@ section{ padding:96px 0; position:relative; }
 
 /* ---------- Property filters ---------- */
 .quick-jump{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:28px; }
-.quick-jump a{
+.quick-jump button{
   display:inline-flex; align-items:center; gap:8px; padding:9px 16px 9px 8px; border-radius:999px;
   border:1px solid var(--line); background:var(--surface-2); color:var(--ink); text-decoration:none;
-  font-size:0.84rem; font-weight:600; transition:border-color .2s, background .2s;
+  font-size:0.84rem; font-weight:600; transition:border-color .2s, background .2s; font-family:inherit; cursor:pointer;
 }
-.quick-jump a:hover{ border-color:var(--gold); background:var(--gold-bg); }
-.quick-jump a .dot{ width:7px; height:7px; border-radius:50%; background:var(--emerald); flex-shrink:0; }
-.quick-jump a.is-obras .dot{ background:var(--gold); }
+.quick-jump button:hover{ border-color:var(--gold); background:var(--gold-bg); }
+.quick-jump button .dot{ width:7px; height:7px; border-radius:50%; background:var(--emerald); flex-shrink:0; }
+.quick-jump button.is-obras .dot{ background:var(--gold); }
 .filter-group{ margin-bottom:18px; }
 .filter-group:last-of-type{ margin-bottom:36px; }
 .filter-label{ display:block; font-size:0.74rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-mute); margin-bottom:10px; }
@@ -184,7 +184,7 @@ section{ padding:96px 0; position:relative; }
 .area-clear:hover{ border-color:var(--gold); color:var(--ink); }
 .area-result{ font-size:.85rem; color:var(--gold); font-weight:700; min-height:1.2em; margin-top:10px; }
 @media (max-width:560px){ .area-field{ flex:1 1 40%; justify-content:center; } .area-field input{ width:100%; } }
-.building-details{ border-top:1px solid var(--line); padding:26px 28px 28px; display:grid; gap:26px; }
+.building-details{ border-top:1px solid var(--line); padding:26px 0 0; display:grid; gap:26px; }
 .details-title{ font-size:.74rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 12px; }
 .loc-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
 .loc-col h4{ font-size:.95rem; color:var(--ink); margin:0 0 8px; }
@@ -196,6 +196,9 @@ section{ padding:96px 0; position:relative; }
 .amenity-list.is-simple li{ padding:9px 0; color:var(--ink); font-weight:500; }
 .loc-grid.is-wide{ row-gap:26px; }
 .amenity-list li strong{ display:block; color:var(--ink); font-weight:600; }
+.amenity-list.is-check{ list-style:none; }
+.amenity-list.is-check li{ padding-left:24px; position:relative; }
+.amenity-list.is-check li::before{ content:"✓"; position:absolute; left:0; top:7px; color:var(--emerald); font-weight:700; }
 .amenity-more summary{ cursor:pointer; font-size:.86rem; font-weight:600; color:var(--gold); margin-top:12px; list-style:none; }
 .amenity-more summary::-webkit-details-marker{ display:none; }
 .amenity-more[open] summary .more-open{ display:none; }
@@ -203,7 +206,7 @@ section{ padding:96px 0; position:relative; }
 .amenity-more .amenity-list{ margin-top:6px; }
 .details-note{ font-size:.74rem; color:var(--ink-mute); margin:0; }
 @media (max-width:860px){ .loc-grid{ grid-template-columns:1fr; } .amenity-list{ grid-template-columns:1fr 1fr; } }
-@media (max-width:560px){ .building-details{ padding:22px 18px 24px; } .amenity-list{ grid-template-columns:1fr; } }
+@media (max-width:560px){ .amenity-list{ grid-template-columns:1fr; } }
 .search-panel{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:26px 28px; margin-bottom:28px; }
 .sp-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:20px; }
 .sp-head h3{ margin:0; font-family:'Fraunces', serif; font-size:1.25rem; font-weight:600; color:var(--ink); }
@@ -246,12 +249,74 @@ section{ padding:96px 0; position:relative; }
 .empty-state.show{ display:block; }
 .empty-state a{ color:var(--gold); font-weight:700; text-decoration:none; }
 
-/* ---------- Building ---------- */
-.building{ margin-bottom:56px; }
-.building-card{
+/* ---------- Development cards (grid) ---------- */
+.dev-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:24px; }
+.dev-card{
+  all:unset; box-sizing:border-box; display:flex; flex-direction:column;
   background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
-  overflow:hidden; box-shadow:var(--shadow); margin-bottom:28px;
+  overflow:hidden; box-shadow:var(--shadow); cursor:pointer;
+  transition:transform .25s, box-shadow .25s;
 }
+.dev-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+.dev-card:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+.dev-card-photo{ position:relative; aspect-ratio:4/3; overflow:hidden; background:var(--surface-2); }
+.dev-card-photo img{ width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
+.dev-card:hover .dev-card-photo img{ transform:scale(1.06); }
+.dev-card-badges{ position:absolute; top:14px; left:14px; display:flex; gap:6px; flex-wrap:wrap; max-width:calc(100% - 28px); }
+.dev-badge{
+  background:rgba(21,23,28,0.78); color:#fff; font-size:.68rem; font-weight:700; letter-spacing:.03em;
+  padding:5px 10px; border-radius:999px; text-transform:uppercase; backdrop-filter:blur(4px); white-space:nowrap;
+}
+.dev-badge.is-status.is-pronto{ background:var(--emerald); }
+.dev-badge.is-status.is-obras{ background:var(--gold); color:var(--ink); }
+.dev-card-body{ padding:20px 22px 22px; display:flex; flex-direction:column; gap:12px; flex:1; }
+.dev-card-body h3{ font-size:1.15rem; }
+.dev-card-loc{ font-size:.85rem; color:var(--ink-mute); margin-top:-6px; }
+.dev-specs{ display:flex; gap:20px; flex-wrap:wrap; font-size:.82rem; color:var(--ink-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:12px 0; }
+.dev-specs b{ color:var(--ink); font-weight:600; margin-right:5px; }
+.dev-card-footer{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; }
+.dev-price-label{ font-size:.72rem; color:var(--ink-mute); margin:0; }
+.dev-price{ font-family:'Fraunces',serif; font-size:1.28rem; font-weight:600; color:var(--ink); margin-top:2px; }
+.dev-card-cta{ background:var(--ink); color:#fff; border-radius:999px; padding:10px 18px; font-size:.82rem; font-weight:700; white-space:nowrap; transition:background .2s; }
+.dev-card:hover .dev-card-cta{ background:var(--gold); }
+
+/* ---------- Development detail modal ---------- */
+.dev-modal-backdrop{
+  display:none; position:fixed; inset:0; z-index:200; background:rgba(21,23,28,.62);
+  padding:32px 16px; overflow-y:auto; -webkit-overflow-scrolling:touch;
+}
+.dev-modal-backdrop.open{ display:flex; align-items:flex-start; justify-content:center; }
+.dev-modal{
+  background:var(--surface); border-radius:var(--radius); max-width:960px; width:100%;
+  margin:auto; box-shadow:var(--shadow-lg); position:relative; animation:devModalIn .22s ease;
+}
+@keyframes devModalIn{ from{ opacity:0; transform:translateY(14px) scale(.98); } to{ opacity:1; transform:none; } }
+.dev-modal-close{
+  position:absolute; top:14px; right:14px; width:40px; height:40px; border-radius:50%;
+  background:rgba(21,23,28,.75); color:#fff; border:0; font-size:1.2rem; line-height:1; cursor:pointer;
+  z-index:5; display:flex; align-items:center; justify-content:center; transition:background .2s;
+}
+.dev-modal-close:hover{ background:var(--gold); }
+.dev-modal .building-gallery{ border-radius:var(--radius) var(--radius) 0 0; overflow:hidden; }
+.dev-modal-pad{ padding:28px 30px 32px; }
+.dev-modal-pad .building-info{ padding:0 0 18px; }
+.dev-modal-pad .dev-modal-desc{ color:var(--ink-soft); font-size:.98rem; margin-top:14px; max-width:68ch; }
+.dev-modal-pad .section-label{ font-size:.74rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-mute); margin:30px 0 14px; padding-top:22px; border-top:1px solid var(--line); }
+.dev-modal-pad .section-label:first-of-type{ padding-top:0; border-top:0; margin-top:22px; }
+.dev-modal-pad .unit-grid{ margin-top:4px; }
+@media (max-width:560px){ .dev-modal-pad{ padding:22px 18px 26px; } }
+
+.info-chip-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:14px; }
+.info-chip{ border:1px solid var(--line); border-radius:12px; padding:14px 16px; background:var(--surface); }
+.info-chip .label{ font-size:.7rem; color:var(--ink-mute); text-transform:uppercase; letter-spacing:.04em; font-weight:700; }
+.info-chip .value{ margin-top:6px; font-size:1rem; font-weight:600; color:var(--ink); font-family:'Fraunces',serif; }
+
+.price-box{ border:1px solid var(--line-strong); border-radius:var(--radius); padding:18px 22px; background:var(--gold-bg); display:inline-flex; flex-direction:column; gap:2px; }
+.price-box .label{ font-size:.76rem; color:var(--ink-soft); font-weight:600; }
+.price-box .value{ font-family:'Fraunces',serif; font-size:1.7rem; font-weight:600; color:var(--ink); }
+
+/* ---------- Building (shared by modal content) ---------- */
+.building-card{ background:transparent; border:0; box-shadow:none; }
 .building-gallery{ display:grid; grid-template-columns:1.4fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:3px; }
 .building-gallery a:nth-child(1){ grid-row:1 / 3; }
 .building-gallery a{ display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; background:var(--surface-2); aspect-ratio:3/4; }
@@ -270,13 +335,13 @@ section{ padding:96px 0; position:relative; }
   .building-gallery a{ aspect-ratio:1/1; }
   .building-gallery a:nth-child(1){ grid-column:1 / 3; grid-row:auto; aspect-ratio:3/4; }
 }
-.building-info{ padding:24px 28px; display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap; }
+.building-info{ display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap; }
 .building-tag{
   display:inline-block; font-size:0.72rem; font-weight:700; letter-spacing:0.05em;
   color:var(--emerald); background:var(--emerald-bg); padding:5px 12px; border-radius:999px;
   margin-bottom:10px; text-transform:uppercase;
 }
-.building-info h3{ font-size:1.4rem; font-weight:500; }
+.building-info h3{ font-size:1.4rem; font-weight:500; margin-top:18px; }
 .building-info h3 span{ font-family:'Inter',sans-serif; font-weight:500; font-size:0.95rem; color:var(--ink-mute); margin-left:8px; }
 .building-loc{ margin-top:6px; font-size:0.88rem; color:var(--ink-mute); }
 
@@ -473,13 +538,13 @@ footer{ background:var(--ink); color:rgba(255,255,255,0.75); padding:52px 0 28px
     <div class="section-head reveal">
       <p class="section-tag">Oportunidades ativas</p>
       <h2>Condições especiais para fechamento rápido</h2>
-      <p>Unidades da Vitacon prontas e em obras, com desconto sobre a tabela, para quem quer morar perto da Paulista ou travar uma compra com potencial de valorização agora.</p>
+      <p>Unidades da Vitacon prontas e em obras, com desconto sobre a tabela, para quem quer morar perto da Paulista ou travar uma compra com potencial de valorização agora. Clique em um empreendimento para ver fotos, diferenciais e unidades disponíveis.</p>
     </div>
 
     <div class="quick-jump">
-      <a href="#vitacon-lorena"><span class="dot"></span>Vitacon Lorena · pronto</a>
-      <a href="#vitacon-bela-vista" class="is-obras"><span class="dot"></span>Vitacon Bela Vista · em obras</a>
-      <a href="#vitacon-domingos-de-morais" class="is-obras"><span class="dot"></span>Vitacon Domingos de Morais · em obras</a>
+      <button type="button" data-open-modal="modal-vitacon-lorena"><span class="dot"></span>Vitacon Lorena · pronto</button>
+      <button type="button" class="is-obras" data-open-modal="modal-vitacon-bela-vista"><span class="dot"></span>Vitacon Bela Vista · em obras</button>
+      <button type="button" class="is-obras" data-open-modal="modal-vitacon-domingos-de-morais"><span class="dot"></span>Vitacon Domingos de Morais · em obras</button>
     </div>
 
     <div class="search-panel" role="search" aria-label="Buscar imóveis">
@@ -551,24 +616,106 @@ footer{ background:var(--ink); color:rgba(255,255,255,0.75); padding:52px 0 28px
       <a id="emptyLink" href="https://wa.me/5511982380332?text=Quero%20saber%20sobre%20im%C3%B3veis%20dispon%C3%ADveis" target="_blank" rel="noopener">Falar sobre imóveis disponíveis →</a>
     </div>
 
-    <div class="building reveal" id="vitacon-lorena" data-dif="piscina rooftop academia spa coworking cokitchen lavanderia pet bike grabgo" data-status="pronto">
-      <div class="building-card">
-        <div class="building-gallery">
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Lorena" target="_blank" rel="noopener"><img src="facade.jpg" alt="Fachada Vitacon Lorena"></a>
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Lorena" target="_blank" rel="noopener"><img src="amenity1.jpg" alt="Lounge e Housi Market"></a>
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Lorena" target="_blank" rel="noopener"><img src="amenity2.jpg" alt="Concierge"></a>
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Lorena" target="_blank" rel="noopener"><img src="amenity3.jpg" alt="Piscina e Solarium"></a>
+    <!-- Cartões de empreendimentos -->
+    <div class="dev-grid">
+      <button class="dev-card reveal" type="button" data-open-modal="modal-vitacon-lorena">
+        <div class="dev-card-photo">
+          <img src="facade.jpg" alt="Fachada Vitacon Lorena">
+          <div class="dev-card-badges" data-badges-for="vitacon-lorena"><span class="dev-badge is-status is-pronto">Pronto</span></div>
         </div>
-        <div class="building-info">
-          <div>
-            <span class="building-tag">Pronto · Projeto entregue</span>
-            <h3>Vitacon Lorena <span>Jardins, São Paulo</span></h3>
-            <p class="building-loc">Alameda Lorena, 2154, ao lado da Av. Rebouças e da Oscar Freire</p>
+        <div class="dev-card-body">
+          <h3>Vitacon Lorena</h3>
+          <p class="dev-card-loc">Jardins, São Paulo/SP</p>
+          <div class="dev-specs">
+            <span><b>Área</b><span data-stat-for="vitacon-lorena" data-stat="area">—</span></span>
+            <span><b>Dormitórios</b><span data-stat-for="vitacon-lorena" data-stat="quartos">—</span></span>
+          </div>
+          <div class="dev-card-footer">
+            <div><p class="dev-price-label">A partir de</p><p class="dev-price">R$ <span data-stat-for="vitacon-lorena" data-stat="price">—</span></p></div>
+            <span class="dev-card-cta">Ver detalhes</span>
           </div>
         </div>
-        <div class="building-details">
-          <div>
-            <p class="details-title">Localização · tudo a pé, no coração dos Jardins</p>
+      </button>
+
+      <button class="dev-card reveal" type="button" data-open-modal="modal-vitacon-bela-vista">
+        <div class="dev-card-photo">
+          <img src="bv-facade.jpg" alt="Fachada Vitacon Bela Vista">
+          <div class="dev-card-badges" data-badges-for="vitacon-bela-vista"><span class="dev-badge is-status is-obras">Em obras</span></div>
+        </div>
+        <div class="dev-card-body">
+          <h3>Vitacon Bela Vista</h3>
+          <p class="dev-card-loc">Bela Vista, São Paulo/SP</p>
+          <div class="dev-specs">
+            <span><b>Área</b><span data-stat-for="vitacon-bela-vista" data-stat="area">—</span></span>
+            <span><b>Dormitórios</b><span data-stat-for="vitacon-bela-vista" data-stat="quartos">—</span></span>
+          </div>
+          <div class="dev-card-footer">
+            <div><p class="dev-price-label">A partir de</p><p class="dev-price">R$ <span data-stat-for="vitacon-bela-vista" data-stat="price">—</span></p></div>
+            <span class="dev-card-cta">Ver detalhes</span>
+          </div>
+        </div>
+      </button>
+
+      <button class="dev-card reveal" type="button" data-open-modal="modal-vitacon-domingos-de-morais">
+        <div class="dev-card-photo">
+          <img src="dm-facade.jpg" alt="Fachada Vitacon Domingos de Morais">
+          <div class="dev-card-badges" data-badges-for="vitacon-domingos-de-morais"><span class="dev-badge is-status is-obras">Em obras</span></div>
+        </div>
+        <div class="dev-card-body">
+          <h3>Vitacon Domingos de Morais</h3>
+          <p class="dev-card-loc">Vila Mariana, São Paulo/SP</p>
+          <div class="dev-specs">
+            <span><b>Área</b><span data-stat-for="vitacon-domingos-de-morais" data-stat="area">—</span></span>
+            <span><b>Dormitórios</b><span data-stat-for="vitacon-domingos-de-morais" data-stat="quartos">—</span></span>
+          </div>
+          <div class="dev-card-footer">
+            <div><p class="dev-price-label">A partir de</p><p class="dev-price">R$ <span data-stat-for="vitacon-domingos-de-morais" data-stat="price">—</span></p></div>
+            <span class="dev-card-cta">Ver detalhes</span>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <!-- Modais de detalhe -->
+    <div class="dev-modal-backdrop" id="modal-vitacon-lorena" data-building data-dif="piscina rooftop academia spa coworking cokitchen lavanderia pet bike grabgo" data-status="pronto">
+      <div class="dev-modal">
+        <button class="dev-modal-close" type="button" data-close-modal aria-label="Fechar">✕</button>
+        <div class="building-card">
+          <div class="building-gallery">
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Lorena" target="_blank" rel="noopener"><img src="facade.jpg" alt="Fachada Vitacon Lorena"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Lorena" target="_blank" rel="noopener"><img src="amenity1.jpg" alt="Lounge e Housi Market"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Lorena" target="_blank" rel="noopener"><img src="amenity2.jpg" alt="Concierge"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Lorena" target="_blank" rel="noopener"><img src="amenity3.jpg" alt="Piscina e Solarium"></a>
+          </div>
+          <div class="dev-modal-pad">
+            <div class="building-info">
+              <div>
+                <span class="building-tag">Pronto · Projeto entregue</span>
+                <h3>Vitacon Lorena <span>Jardins, São Paulo</span></h3>
+                <p class="building-loc">Alameda Lorena, 2154, ao lado da Av. Rebouças e da Oscar Freire</p>
+                <p class="dev-modal-desc">No coração dos Jardins, a poucos passos da Oscar Freire, da Augusta e da Rebouças. Projeto pronto e entregue, com studios e apartamentos para morar ou investir, parte do Innovation Pack by Vitacon: piscina, sky bar, academia, spa e coworking.</p>
+              </div>
+            </div>
+
+            <p class="section-label">Características</p>
+            <div class="info-chip-grid">
+              <div class="info-chip"><p class="label">Área</p><p class="value"><span data-stat-for="vitacon-lorena" data-stat="area">—</span></p></div>
+              <div class="info-chip"><p class="label">Dormitórios</p><p class="value"><span data-stat-for="vitacon-lorena" data-stat="quartos">—</span></p></div>
+              <div class="info-chip"><p class="label">Estágio</p><p class="value">Pronto</p></div>
+              <div class="info-chip"><p class="label">Finalidade</p><p class="value">Residencial</p></div>
+            </div>
+
+            <div style="margin-top:22px;">
+              <div class="price-box">
+                <span class="label">A partir de</span>
+                <span class="value">R$ <span data-stat-for="vitacon-lorena" data-stat="price">—</span></span>
+              </div>
+            </div>
+
+            <p class="section-label">Diferenciais · Innovation Pack by Vitacon</p>
+            <ul class="amenity-list is-simple is-check"><li>Cobertura com piscina e solarium</li><li>Sky Bar</li><li>Academia</li><li>Spa</li><li>Coworking Pro e callbox</li><li>Cokitchen</li><li>Lavanderia coletiva</li><li>Grab &amp; Go</li><li>Bicicletário com Housi Ferramentas</li><li>Pet Place</li><li>VN Gardening</li></ul>
+
+            <p class="section-label">Localização · tudo a pé, no coração dos Jardins</p>
             <div class="loc-grid is-wide">
               <div class="loc-col"><h4>Principais vias</h4><ul><li>Rua Oscar Freire<b>1 min a pé</b></li><li>Rua Augusta<b>5 min a pé</b></li><li>Rua Haddock Lobo<b>6 min a pé</b></li></ul></div>
               <div class="loc-col"><h4>Bares e restaurantes</h4><ul><li>Carlos Pizza<b>3 min a pé</b></li><li>Botanikafé<b>4 min a pé</b></li><li>Casarìa SP<b>10 min a pé</b></li><li>Restaurante Mi.Ado<b>11 min a pé</b></li><li>Kouzina<b>12 min a pé</b></li></ul></div>
@@ -576,259 +723,291 @@ footer{ background:var(--ink); color:rgba(255,255,255,0.75); padding:52px 0 28px
               <div class="loc-col"><h4>Academias</h4><ul><li>Bodytech<b>8 min a pé</b></li><li>Les Cinq Gym<b>9 min a pé</b></li><li>Bio Ritmo<b>19 min a pé</b></li></ul></div>
               <div class="loc-col"><h4>Cultura</h4><ul><li>Luis Maluf Galeria de Arte<b>9 min a pé</b></li><li>Zipper Galeria<b>13 min a pé</b></li><li>Club Athletico Paulistano<b>13 min a pé</b></li><li>MASP<b>13 min a pé</b></li><li>Instituto Moreira Salles (IMS Paulista)<b>15 min a pé</b></li><li>MIS<b>23 min a pé</b></li></ul></div>
             </div>
-          </div>
-          <div>
-            <p class="details-title">Áreas comuns · Innovation Pack by Vitacon</p>
-            <ul class="amenity-list is-simple"><li>Cobertura com piscina e solarium</li><li>Sky Bar</li><li>Academia</li><li>Spa</li><li>Coworking Pro e callbox</li><li>Cokitchen</li><li>Lavanderia coletiva</li><li>Grab & Go</li><li>Bicicletário com Housi Ferramentas</li><li>Pet Place</li><li>VN Gardening</li></ul>
-          </div>
-          <p class="details-note">Tempos de caminhada conforme material da incorporadora.</p>
-        </div>
-      </div>
+            <p class="details-note" style="margin-top:12px;">Tempos de caminhada conforme material da incorporadora.</p>
 
-      <div class="unit-grid">
-        <div class="unit-card" data-dest="NR" data-quartos="1" data-suites="0" data-vagas="0" data-type="comercial">
-          <img class="unit-plan" src="plan202.jpg" alt="Planta Unidade 202">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">NR · 26,93 m²</span><span class="unit-badge">28% off</span></div>
-            <p class="unit-num">Unidade 202</p>
-            <p class="unit-old">R$ 854.784,39</p>
-            <p class="unit-new">R$ 615.444,76</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20202%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Quero saber mais</a>
+            <p class="section-label">Unidades disponíveis</p>
+            <div class="unit-grid">
+              <div class="unit-card" data-dest="NR" data-quartos="1" data-suites="0" data-vagas="0" data-type="comercial">
+                <img class="unit-plan" src="plan202.jpg" alt="Planta Unidade 202">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">NR · 26,93 m²</span><span class="unit-badge">28% off</span></div>
+                  <p class="unit-num">Unidade 202</p>
+                  <p class="unit-old">R$ 854.784,39</p>
+                  <p class="unit-new">R$ 615.444,76</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20202%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
+                <img class="unit-plan" src="plan617.jpg" alt="Planta Unidade 617">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 16,99 m²</span><span class="unit-badge">28% off</span></div>
+                  <p class="unit-num">Unidade 617</p>
+                  <p class="unit-old">R$ 708.283,26</p>
+                  <p class="unit-new">R$ 509.963,95</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20617%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="2" data-suites="0" data-vagas="0" data-type="residencial">
+                <img class="unit-plan" src="plan1304.jpg" alt="Planta Unidade 1304">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 46,68 m²</span><span class="unit-badge">32% off</span></div>
+                  <p class="unit-num">Unidade 1304</p>
+                  <p class="unit-flag">2 dormitórios · terraço coberto</p>
+                  <p class="unit-old">R$ 1.874.478,25</p>
+                  <p class="unit-new">R$ 1.274.645,21</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201304%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="2" data-suites="1" data-vagas="0" data-type="residencial">
+                <img class="unit-plan" src="plan1201.jpg" alt="Planta Unidade 1201">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 130,70 m²</span><span class="unit-badge">32% off</span></div>
+                  <p class="unit-num">Unidade 1201</p>
+                  <p class="unit-flag">Cobertura · suíte + dormitório · terraço coberto e descoberto</p>
+                  <p class="unit-old">R$ 3.710.086,89</p>
+                  <p class="unit-new">R$ 2.522.859,09</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201201%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
+                <img class="unit-plan" src="plan604.jpg" alt="Planta Unidade 604">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 19,51 m²</span><span class="unit-badge">28% off</span></div>
+                  <p class="unit-num">Unidade 604</p>
+                  <p class="unit-old">R$ 835.108,57</p>
+                  <p class="unit-new">R$ 601.278,17</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20604%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="tour-card">
+                <p>Vídeos das áreas comuns e book completo do projeto disponíveis. Peça no WhatsApp que eu te envio.</p>
+                <a href="https://wa.me/5511982380332?text=Quero%20ver%20os%20v%C3%ADdeos%20das%20%C3%A1reas%20comuns%20e%20o%20book%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Pedir no WhatsApp</a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
-          <img class="unit-plan" src="plan617.jpg" alt="Planta Unidade 617">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 16,99 m²</span><span class="unit-badge">28% off</span></div>
-            <p class="unit-num">Unidade 617</p>
-            <p class="unit-old">R$ 708.283,26</p>
-            <p class="unit-new">R$ 509.963,95</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20617%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="2" data-suites="0" data-vagas="0" data-type="residencial">
-          <img class="unit-plan" src="plan1304.jpg" alt="Planta Unidade 1304">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 46,68 m²</span><span class="unit-badge">32% off</span></div>
-            <p class="unit-num">Unidade 1304</p>
-            <p class="unit-flag">2 dormitórios · terraço coberto</p>
-            <p class="unit-old">R$ 1.874.478,25</p>
-            <p class="unit-new">R$ 1.274.645,21</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201304%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="2" data-suites="1" data-vagas="0" data-type="residencial">
-          <img class="unit-plan" src="plan1201.jpg" alt="Planta Unidade 1201">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 130,70 m²</span><span class="unit-badge">32% off</span></div>
-            <p class="unit-num">Unidade 1201</p>
-            <p class="unit-flag">Cobertura · suíte + dormitório · terraço coberto e descoberto</p>
-            <p class="unit-old">R$ 3.710.086,89</p>
-            <p class="unit-new">R$ 2.522.859,09</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201201%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
-          <img class="unit-plan" src="plan604.jpg" alt="Planta Unidade 604">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 19,51 m²</span><span class="unit-badge">28% off</span></div>
-            <p class="unit-num">Unidade 604</p>
-            <p class="unit-old">R$ 835.108,57</p>
-            <p class="unit-new">R$ 601.278,17</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20604%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="tour-card">
-          <p>Vídeos das áreas comuns e book completo do projeto disponíveis. Peça no WhatsApp que eu te envio.</p>
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20os%20v%C3%ADdeos%20das%20%C3%A1reas%20comuns%20e%20o%20book%20do%20Vitacon%20Lorena" target="_blank" rel="noopener">Pedir no WhatsApp</a>
         </div>
       </div>
     </div>
 
-
-    <div class="building reveal" id="vitacon-bela-vista" data-dif="piscina rooftop academia coworking cokitchen games lavanderia pet bike grabgo" data-status="obras">
-      <div class="building-card">
-        <div class="building-gallery">
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener"><img src="bv-facade.jpg" alt="Fachada Vitacon Bela Vista"></a>
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener"><img src="bv-lobby.jpg" alt="Lobby Vitacon Bela Vista"></a>
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener"><img src="bv-rooftop.jpg" alt="Rooftop Vitacon Bela Vista"></a>
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener"><img src="bv-piscina.jpg" alt="Piscina Vitacon Bela Vista"></a>
-        </div>
-        <div class="building-info">
-          <div>
-            <span class="building-tag" style="color:var(--gold);background:var(--gold-bg);">Em obras</span>
-            <h3>Vitacon Bela Vista <span>Bela Vista, São Paulo</span></h3>
-            <p class="building-loc">Av. Brigadeiro Luís Antônio, 871, próximo à Av. Paulista, Shopping Pátio Paulista, Estação São Joaquim do Metrô e Hospital Beneficência Portuguesa</p>
+    <div class="dev-modal-backdrop" id="modal-vitacon-bela-vista" data-building data-dif="piscina rooftop academia coworking cokitchen games lavanderia pet bike grabgo" data-status="obras">
+      <div class="dev-modal">
+        <button class="dev-modal-close" type="button" data-close-modal aria-label="Fechar">✕</button>
+        <div class="building-card">
+          <div class="building-gallery">
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener"><img src="bv-facade.jpg" alt="Fachada Vitacon Bela Vista"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener"><img src="bv-lobby.jpg" alt="Lobby Vitacon Bela Vista"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener"><img src="bv-rooftop.jpg" alt="Rooftop Vitacon Bela Vista"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener"><img src="bv-piscina.jpg" alt="Piscina Vitacon Bela Vista"></a>
           </div>
-        </div>
-        <div class="building-details">
-          <div>
-            <p class="details-title">Localização · o que fica perto</p>
+          <div class="dev-modal-pad">
+            <div class="building-info">
+              <div>
+                <span class="building-tag" style="color:var(--gold);background:var(--gold-bg);">Em obras</span>
+                <h3>Vitacon Bela Vista <span>Bela Vista, São Paulo</span></h3>
+                <p class="building-loc">Av. Brigadeiro Luís Antônio, 871, próximo à Av. Paulista, Shopping Pátio Paulista, Estação São Joaquim do Metrô e Hospital Beneficência Portuguesa</p>
+                <p class="dev-modal-desc">Na Av. Brigadeiro Luís Antônio, a poucos passos da Av. Paulista, do Shopping Pátio Paulista e da Estação São Joaquim do Metrô. Em obras, com studios e apartamentos de até 2 dormitórios e 11 áreas comuns, entre elas piscina externa, rooftop e coworking.</p>
+              </div>
+            </div>
+
+            <p class="section-label">Características</p>
+            <div class="info-chip-grid">
+              <div class="info-chip"><p class="label">Área</p><p class="value"><span data-stat-for="vitacon-bela-vista" data-stat="area">—</span></p></div>
+              <div class="info-chip"><p class="label">Dormitórios</p><p class="value"><span data-stat-for="vitacon-bela-vista" data-stat="quartos">—</span></p></div>
+              <div class="info-chip"><p class="label">Estágio</p><p class="value">Em obras</p></div>
+              <div class="info-chip"><p class="label">Finalidade</p><p class="value">Residencial</p></div>
+            </div>
+
+            <div style="margin-top:22px;">
+              <div class="price-box">
+                <span class="label">A partir de</span>
+                <span class="value">R$ <span data-stat-for="vitacon-bela-vista" data-stat="price">—</span></span>
+              </div>
+            </div>
+
+            <p class="section-label">Diferenciais · 11 áreas comuns</p>
+            <ul class="amenity-list is-simple is-check"><li>Lobby</li><li>Piscina externa</li><li>Rooftop</li><li>Coworking Pro</li><li>Fitness com área para crossfit</li><li>Cokitchen e lounge bar</li><li>Lounge games</li><li>Grab &amp; Go</li><li>Lavanderia coletiva</li><li>Pet Place</li><li>Bike friendly building</li></ul>
+
+            <p class="section-label">Localização · o que fica perto</p>
             <div class="loc-grid">
               <div class="loc-col"><h4>Mobilidade</h4><ul><li>Ciclofaixa Consolação<b>6 min de bike</b></li><li>Metrô Higienópolis-Mackenzie<b>9 min a pé</b></li><li>Metrô Consolação<b>13 min a pé</b></li><li>Metrô Paulista<b>13 min a pé</b></li></ul></div>
               <div class="loc-col"><h4>Educação e saúde</h4><ul><li>FMU Paulista<b>5 min a pé</b></li><li>Hospital Sírio-Libanês<b>6 min a pé</b></li><li>Hospital 9 de Julho<b>7 min a pé</b></li><li>Universidade Mackenzie<b>10 min a pé</b></li><li>FGV<b>11 min a pé</b></li></ul></div>
               <div class="loc-col"><h4>Lazer</h4><ul><li>Shopping Frei Caneca<b>1 min a pé</b></li><li>Cine Belas Artes<b>7 min a pé</b></li><li>Parque Cordeiro Martin Luther King<b>11 min de bike</b></li><li>Sesc Consolação<b>15 min a pé</b></li></ul></div>
             </div>
-          </div>
-          <div>
-            <p class="details-title">Áreas comuns · 11 espaços</p>
-            <ul class="amenity-list is-simple"><li>Lobby</li><li>Piscina externa</li><li>Rooftop</li><li>Coworking Pro</li><li>Fitness com área para crossfit</li><li>Cokitchen e lounge bar</li><li>Lounge games</li><li>Grab & Go</li><li>Lavanderia coletiva</li><li>Pet Place</li><li>Bike friendly building</li></ul>
-          </div>
-          <p class="details-note">Tempos estimados conforme material da incorporadora. Áreas comuns sujeitas a alterações de projeto.</p>
-        </div>
-      </div>
+            <p class="details-note" style="margin-top:12px;">Tempos estimados conforme material da incorporadora. Áreas comuns sujeitas a alterações de projeto.</p>
 
-      <div class="unit-grid">
-        <div class="unit-card" data-dest="NR" data-quartos="1" data-suites="0" data-vagas="0" data-type="comercial">
-          <img class="unit-plan" src="bv-plan203.jpg" alt="Planta Unidade 203">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">NR · 22,85 m²</span><span class="unit-badge">10% off</span></div>
-            <p class="unit-num">Unidade 203</p>
-            <p class="unit-old">R$ 548.177,89</p>
-            <p class="unit-new">R$ 493.360,10</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20203%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
-          <img class="unit-plan" src="bv-plan505.jpg" alt="Planta Unidade 505">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 24,50 m²</span><span class="unit-badge">10% off</span></div>
-            <p class="unit-num">Unidade 505</p>
-            <p class="unit-old">R$ 578.422,96</p>
-            <p class="unit-new">R$ 520.580,66</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20505%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
-          <img class="unit-plan" src="bv-plan1203.jpg" alt="Planta Unidade 1203">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 21,85 m²</span><span class="unit-badge">10% off</span></div>
-            <p class="unit-num">Unidade 1203</p>
-            <p class="unit-old">R$ 616.116,12</p>
-            <p class="unit-new">R$ 554.504,51</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201203%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
-          <img class="unit-plan" src="bv-plan1613.jpg" alt="Planta Unidade 1613">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 21,85 m²</span><span class="unit-badge">10% off</span></div>
-            <p class="unit-num">Unidade 1613</p>
-            <p class="unit-old">R$ 635.512,33</p>
-            <p class="unit-new">R$ 571.961,10</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201613%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="2" data-suites="1" data-vagas="0" data-type="residencial">
-          <img class="unit-plan" src="bv-plan1804.jpg" alt="Planta Unidade 1804">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 68,80 m²</span><span class="unit-badge">14% off</span></div>
-            <p class="unit-num">Unidade 1804</p>
-            <p class="unit-old">R$ 1.222.497,89</p>
-            <p class="unit-new">R$ 1.051.348,29</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201804%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener">Quero saber mais</a>
+            <p class="section-label">Unidades disponíveis</p>
+            <div class="unit-grid">
+              <div class="unit-card" data-dest="NR" data-quartos="1" data-suites="0" data-vagas="0" data-type="comercial">
+                <img class="unit-plan" src="bv-plan203.jpg" alt="Planta Unidade 203">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">NR · 22,85 m²</span><span class="unit-badge">10% off</span></div>
+                  <p class="unit-num">Unidade 203</p>
+                  <p class="unit-old">R$ 548.177,89</p>
+                  <p class="unit-new">R$ 493.360,10</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20203%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
+                <img class="unit-plan" src="bv-plan505.jpg" alt="Planta Unidade 505">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 24,50 m²</span><span class="unit-badge">10% off</span></div>
+                  <p class="unit-num">Unidade 505</p>
+                  <p class="unit-old">R$ 578.422,96</p>
+                  <p class="unit-new">R$ 520.580,66</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20505%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
+                <img class="unit-plan" src="bv-plan1203.jpg" alt="Planta Unidade 1203">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 21,85 m²</span><span class="unit-badge">10% off</span></div>
+                  <p class="unit-num">Unidade 1203</p>
+                  <p class="unit-old">R$ 616.116,12</p>
+                  <p class="unit-new">R$ 554.504,51</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201203%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
+                <img class="unit-plan" src="bv-plan1613.jpg" alt="Planta Unidade 1613">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 21,85 m²</span><span class="unit-badge">10% off</span></div>
+                  <p class="unit-num">Unidade 1613</p>
+                  <p class="unit-old">R$ 635.512,33</p>
+                  <p class="unit-new">R$ 571.961,10</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201613%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="2" data-suites="1" data-vagas="0" data-type="residencial">
+                <img class="unit-plan" src="bv-plan1804.jpg" alt="Planta Unidade 1804">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 68,80 m²</span><span class="unit-badge">14% off</span></div>
+                  <p class="unit-num">Unidade 1804</p>
+                  <p class="unit-old">R$ 1.222.497,89</p>
+                  <p class="unit-new">R$ 1.051.348,29</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201804%20do%20Vitacon%20Bela%20Vista" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-
-    <div class="building reveal" id="vitacon-domingos-de-morais" data-dif="piscina rooftop academia coworking reuniao podcast cokitchen games lavanderia pet bike market delivery grabgo" data-status="obras">
-      <div class="building-card">
-        <div class="building-gallery is-cover">
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-facade.jpg" alt="Fachada Vitacon Domingos de Morais" loading="lazy"></a>
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-acesso.jpg" alt="Acesso Vitacon Domingos de Morais" loading="lazy"></a>
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-lobby.jpg" alt="Lobby e market Vitacon Domingos de Morais" loading="lazy"></a>
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-coworking.jpg" alt="Coworking Vitacon Domingos de Morais" loading="lazy"></a>
-          <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-podcast.jpg" alt="Estúdio de podcast Vitacon Domingos de Morais" loading="lazy"></a>
-        </div>
-        <div class="building-info">
-          <div>
-            <span class="building-tag" style="color:var(--gold);background:var(--gold-bg);">Em obras · Entrega prevista 11/2028</span>
-            <h3>Vitacon Domingos de Morais <span>Vila Mariana, São Paulo</span></h3>
-            <p class="building-loc">Rua Domingos de Morais, esquina com a Rua Luís Góis, a 3 minutos de bike do Shopping Metrô Santa Cruz</p>
+    <div class="dev-modal-backdrop" id="modal-vitacon-domingos-de-morais" data-building data-dif="piscina rooftop academia coworking reuniao podcast cokitchen games lavanderia pet bike market delivery grabgo" data-status="obras">
+      <div class="dev-modal">
+        <button class="dev-modal-close" type="button" data-close-modal aria-label="Fechar">✕</button>
+        <div class="building-card">
+          <div class="building-gallery is-cover">
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-facade.jpg" alt="Fachada Vitacon Domingos de Morais" loading="lazy"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-acesso.jpg" alt="Acesso Vitacon Domingos de Morais" loading="lazy"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-lobby.jpg" alt="Lobby e market Vitacon Domingos de Morais" loading="lazy"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-coworking.jpg" alt="Coworking Vitacon Domingos de Morais" loading="lazy"></a>
+            <a href="https://wa.me/5511982380332?text=Quero%20ver%20mais%20fotos%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener"><img src="dm-podcast.jpg" alt="Estúdio de podcast Vitacon Domingos de Morais" loading="lazy"></a>
           </div>
-        </div>
-        <div class="building-details">
-          <div>
-            <p class="details-title">Localização · o que fica perto</p>
+          <div class="dev-modal-pad">
+            <div class="building-info">
+              <div>
+                <span class="building-tag" style="color:var(--gold);background:var(--gold-bg);">Em obras · Entrega prevista 11/2028</span>
+                <h3>Vitacon Domingos de Morais <span>Vila Mariana, São Paulo</span></h3>
+                <p class="building-loc">Rua Domingos de Morais, esquina com a Rua Luís Góis, a 3 minutos de bike do Shopping Metrô Santa Cruz</p>
+                <p class="dev-modal-desc">Na Vila Mariana, na esquina com a Rua Luís Góis, a poucos minutos de bike do Shopping Metrô Santa Cruz. Em obras, com entrega prevista para 11/2028, reúne 22 áreas comuns, entre elas pool deck, sky bar, fitness space e estúdio de podcast.</p>
+              </div>
+            </div>
+
+            <p class="section-label">Características</p>
+            <div class="info-chip-grid">
+              <div class="info-chip"><p class="label">Área</p><p class="value"><span data-stat-for="vitacon-domingos-de-morais" data-stat="area">—</span></p></div>
+              <div class="info-chip"><p class="label">Dormitórios</p><p class="value"><span data-stat-for="vitacon-domingos-de-morais" data-stat="quartos">—</span></p></div>
+              <div class="info-chip"><p class="label">Estágio</p><p class="value">Em obras</p></div>
+              <div class="info-chip"><p class="label">Finalidade</p><p class="value">Residencial</p></div>
+              <div class="info-chip"><p class="label">Entrega</p><p class="value">11/2028</p></div>
+            </div>
+
+            <div style="margin-top:22px;">
+              <div class="price-box">
+                <span class="label">A partir de</span>
+                <span class="value">R$ <span data-stat-for="vitacon-domingos-de-morais" data-stat="price">—</span></span>
+              </div>
+            </div>
+
+            <p class="section-label">Diferenciais · 22 áreas comuns</p>
+            <ul class="amenity-list is-check"><li><strong>Pool Deck</strong>Piscina com vista panorâmica, deck molhado, ombrelone e espreguiçadeiras.</li><li><strong>Sky Bar</strong>Bar próximo à piscina para socializar.</li><li><strong>Fitness Space by Life Fitness</strong>Equipamentos de última geração para treinos de alta performance.</li><li><strong>Working Pro</strong>Área multifuncional com Wi-Fi, cabine phone booth e sala de reunião mobiliada.</li><li><strong>Podcast Studio</strong>Sonorização, Wi-Fi e iluminação para gravações e entrevistas profissionais.</li><li><strong>Lobby Concierge</strong>Wi-Fi, ambiente de estar, sonorização e recepção acolhedora.</li><li><strong>Minimarket</strong>Itens essenciais do dia a dia, com acesso fácil e rápido.</li><li><strong>Party Lounge</strong>Bar em ilha, mesa ampla e terraço coberto.</li><li><strong>Cokitchen Lounge</strong>Cozinha compartilhada com cooktop em ilha e estar com streaming.</li></ul>
+            <details class="amenity-more">
+              <summary><span class="more-open">Ver todos os 22 espaços ↓</span><span class="more-close">Mostrar menos ↑</span></summary>
+              <ul class="amenity-list is-check"><li><strong>Barbecue</strong>Churrasqueira elétrica, cozinha com cooktop em ilha e estar.</li><li><strong>Fire Place</strong>Ambiente acolhedor com lareira para relaxar.</li><li><strong>Wellness Space</strong>Espaço para alongamentos e treino funcional.</li><li><strong>Games Space</strong>Mesa de sinuca e poker.</li><li><strong>Outdoor Patio</strong>Estar externo para pausas revigorantes.</li><li><strong>Pet Place</strong>Circuito com rampa, túnel e obstáculos para o seu pet.</li><li><strong>Laundry Share</strong>Máquinas de lavar e secar com espaço de espera confortável.</li><li><strong>Grab &amp; Go</strong>Snacks e bebidas em vending machine completa.</li><li><strong>Delivery Room</strong>Armários, cabideiro e refrigerador para suas encomendas.</li><li><strong>Bag Keeper</strong>Guarda-volumes integrado à operação Housi.</li><li><strong>Bike Space</strong>Espaço seguro com tomadas para bikes elétricas.</li><li><strong>Tools Sharing</strong>Ferramentas compartilhadas para pequenos reparos.</li><li><strong>Service Access</strong>Acesso de serviço monitorado para entregas e suporte.</li></ul>
+            </details>
+
+            <p class="section-label">Localização · o que fica perto</p>
             <div class="loc-grid">
               <div class="loc-col"><h4>Lazer</h4><ul><li>Shopping Metrô Santa Cruz<b>3 min de bike</b></li><li>Parque Ibirapuera<b>12 min de bike</b></li><li>Parque das Bicicletas<b>12 min de bike</b></li><li>Sesc Vila Mariana<b>15 min de bike</b></li><li>Shopping Ibirapuera<b>15 min de bike</b></li><li>São Paulo Expo<b>15 min de carro</b></li></ul></div>
               <div class="loc-col"><h4>Educação</h4><ul><li>UNIFAI<b>3 min de bike</b></li><li>UNIFESP<b>7 min de bike</b></li><li>ESPM<b>11 min de bike</b></li><li>Faculdade Belas Artes<b>11 min de bike</b></li></ul></div>
               <div class="loc-col"><h4>Saúde</h4><ul><li>Hospital Paulista<b>10 min de carro</b></li><li>Hospital Japonês Santa Cruz<b>10 min de carro</b></li><li>Hospital e Maternidade Sepaco<b>10 min de carro</b></li><li>Hospital Ortopédico AACD<b>10 min de carro</b></li><li>Hospital São Paulo<b>13 min de carro</b></li></ul></div>
             </div>
-          </div>
-          <div>
-            <p class="details-title">Áreas comuns · 22 espaços</p>
-            <ul class="amenity-list"><li><strong>Pool Deck</strong>Piscina com vista panorâmica, deck molhado, ombrelone e espreguiçadeiras.</li><li><strong>Sky Bar</strong>Bar próximo à piscina para socializar.</li><li><strong>Fitness Space by Life Fitness</strong>Equipamentos de última geração para treinos de alta performance.</li><li><strong>Working Pro</strong>Área multifuncional com Wi-Fi, cabine phone booth e sala de reunião mobiliada.</li><li><strong>Podcast Studio</strong>Sonorização, Wi-Fi e iluminação para gravações e entrevistas profissionais.</li><li><strong>Lobby Concierge</strong>Wi-Fi, ambiente de estar, sonorização e recepção acolhedora.</li><li><strong>Minimarket</strong>Itens essenciais do dia a dia, com acesso fácil e rápido.</li><li><strong>Party Lounge</strong>Bar em ilha, mesa ampla e terraço coberto.</li><li><strong>Cokitchen Lounge</strong>Cozinha compartilhada com cooktop em ilha e estar com streaming.</li></ul>
-            <details class="amenity-more">
-              <summary><span class="more-open">Ver todos os 22 espaços ↓</span><span class="more-close">Mostrar menos ↑</span></summary>
-              <ul class="amenity-list"><li><strong>Barbecue</strong>Churrasqueira elétrica, cozinha com cooktop em ilha e estar.</li><li><strong>Fire Place</strong>Ambiente acolhedor com lareira para relaxar.</li><li><strong>Wellness Space</strong>Espaço para alongamentos e treino funcional.</li><li><strong>Games Space</strong>Mesa de sinuca e poker.</li><li><strong>Outdoor Patio</strong>Estar externo para pausas revigorantes.</li><li><strong>Pet Place</strong>Circuito com rampa, túnel e obstáculos para o seu pet.</li><li><strong>Laundry Share</strong>Máquinas de lavar e secar com espaço de espera confortável.</li><li><strong>Grab & Go</strong>Snacks e bebidas em vending machine completa.</li><li><strong>Delivery Room</strong>Armários, cabideiro e refrigerador para suas encomendas.</li><li><strong>Bag Keeper</strong>Guarda-volumes integrado à operação Housi.</li><li><strong>Bike Space</strong>Espaço seguro com tomadas para bikes elétricas.</li><li><strong>Tools Sharing</strong>Ferramentas compartilhadas para pequenos reparos.</li><li><strong>Service Access</strong>Acesso de serviço monitorado para entregas e suporte.</li></ul>
-            </details>
-          </div>
-          <p class="details-note">Tempos estimados pelo Google Maps, conforme material da incorporadora. Áreas comuns sujeitas a alterações de projeto.</p>
-        </div>
-      </div>
+            <p class="details-note" style="margin-top:12px;">Tempos estimados pelo Google Maps, conforme material da incorporadora. Áreas comuns sujeitas a alterações de projeto.</p>
 
-      <div class="unit-grid">
-        <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
-          <img class="unit-plan" src="dm-plan428.jpg" alt="Planta Unidade 428 Vitacon Domingos de Morais" loading="lazy">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 30,25 m²</span><span class="unit-badge">10% off</span></div>
-            <p class="unit-num">Unidade 428</p>
-            <p class="unit-flag">Studio com terraço</p>
-            <p class="unit-old">R$ 511.443,94</p>
-            <p class="unit-new">R$ 460.299,55</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20428%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
+            <p class="section-label">Unidades disponíveis</p>
+            <div class="unit-grid">
+              <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
+                <img class="unit-plan" src="dm-plan428.jpg" alt="Planta Unidade 428 Vitacon Domingos de Morais" loading="lazy">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 30,25 m²</span><span class="unit-badge">10% off</span></div>
+                  <p class="unit-num">Unidade 428</p>
+                  <p class="unit-flag">Studio com terraço</p>
+                  <p class="unit-old">R$ 511.443,94</p>
+                  <p class="unit-new">R$ 460.299,55</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20428%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
+                <img class="unit-plan" src="dm-plan627.jpg" alt="Planta Unidade 627 Vitacon Domingos de Morais" loading="lazy">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 30,39 m²</span><span class="unit-badge">10% off</span></div>
+                  <p class="unit-num">Unidade 627</p>
+                  <p class="unit-flag">Studio com terraço</p>
+                  <p class="unit-old">R$ 518.920,57</p>
+                  <p class="unit-new">R$ 467.028,51</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20627%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
+                <img class="unit-plan" src="dm-plan906.jpg" alt="Planta Unidade 906 Vitacon Domingos de Morais" loading="lazy">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 32,98 m²</span><span class="unit-badge">10% off</span></div>
+                  <p class="unit-num">Unidade 906</p>
+                  <p class="unit-flag">Studio com terraço</p>
+                  <p class="unit-old">R$ 544.003,89</p>
+                  <p class="unit-new">R$ 489.603,50</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20906%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
+                <img class="unit-plan" src="dm-plan1331.jpg" alt="Planta Unidade 1331 Vitacon Domingos de Morais" loading="lazy">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 30,32 m²</span><span class="unit-badge">10% off</span></div>
+                  <p class="unit-num">Unidade 1331</p>
+                  <p class="unit-flag">Studio com terraço</p>
+                  <p class="unit-old">R$ 536.124,12</p>
+                  <p class="unit-new">R$ 482.511,71</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201331%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
+                <img class="unit-plan" src="dm-plan1651.jpg" alt="Planta Unidade 1651 Vitacon Domingos de Morais" loading="lazy">
+                <div class="unit-body">
+                  <div class="unit-top"><span class="unit-type">R2V · 18,06 m²</span><span class="unit-badge">5% off</span></div>
+                  <p class="unit-num">Unidade 1651</p>
+                  <p class="unit-flag">16º andar · com terraço</p>
+                  <p class="unit-old">R$ 428.254,52</p>
+                  <p class="unit-new">R$ 397.341,79</p>
+                  <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201651%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
+                </div>
+              </div>
+              <div class="tour-card">
+                <p>Book completo, tabela e simulação de fluxo de pagamento disponíveis. Peça no WhatsApp que eu te envio.</p>
+                <a href="https://wa.me/5511982380332?text=Quero%20receber%20o%20book%20e%20a%20tabela%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Pedir no WhatsApp</a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
-          <img class="unit-plan" src="dm-plan627.jpg" alt="Planta Unidade 627 Vitacon Domingos de Morais" loading="lazy">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 30,39 m²</span><span class="unit-badge">10% off</span></div>
-            <p class="unit-num">Unidade 627</p>
-            <p class="unit-flag">Studio com terraço</p>
-            <p class="unit-old">R$ 518.920,57</p>
-            <p class="unit-new">R$ 467.028,51</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20627%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
-          <img class="unit-plan" src="dm-plan906.jpg" alt="Planta Unidade 906 Vitacon Domingos de Morais" loading="lazy">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 32,98 m²</span><span class="unit-badge">10% off</span></div>
-            <p class="unit-num">Unidade 906</p>
-            <p class="unit-flag">Studio com terraço</p>
-            <p class="unit-old">R$ 544.003,89</p>
-            <p class="unit-new">R$ 489.603,50</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%20906%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
-          <img class="unit-plan" src="dm-plan1331.jpg" alt="Planta Unidade 1331 Vitacon Domingos de Morais" loading="lazy">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 30,32 m²</span><span class="unit-badge">10% off</span></div>
-            <p class="unit-num">Unidade 1331</p>
-            <p class="unit-flag">Studio com terraço</p>
-            <p class="unit-old">R$ 536.124,12</p>
-            <p class="unit-new">R$ 482.511,71</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201331%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="unit-card" data-dest="R2V" data-quartos="1" data-suites="0" data-vagas="0" data-type="studio">
-          <img class="unit-plan" src="dm-plan1651.jpg" alt="Planta Unidade 1651 Vitacon Domingos de Morais" loading="lazy">
-          <div class="unit-body">
-            <div class="unit-top"><span class="unit-type">R2V · 18,06 m²</span><span class="unit-badge">5% off</span></div>
-            <p class="unit-num">Unidade 1651</p>
-            <p class="unit-flag">16º andar · com terraço</p>
-            <p class="unit-old">R$ 428.254,52</p>
-            <p class="unit-new">R$ 397.341,79</p>
-            <a class="unit-cta" href="https://wa.me/5511982380332?text=Quero%20saber%20mais%20sobre%20a%20Unidade%201651%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Quero saber mais</a>
-          </div>
-        </div>
-        <div class="tour-card">
-          <p>Book completo, tabela e simulação de fluxo de pagamento disponíveis. Peça no WhatsApp que eu te envio.</p>
-          <a href="https://wa.me/5511982380332?text=Quero%20receber%20o%20book%20e%20a%20tabela%20do%20Vitacon%20Domingos%20de%20Morais" target="_blank" rel="noopener">Pedir no WhatsApp</a>
         </div>
       </div>
     </div>
@@ -973,8 +1152,91 @@ if(!reduce){
   document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
 }
 
+/* Preenche automaticamente área, dormitórios, preço "a partir de" e badges de
+   classificação dos cards e dos modais, a partir das unidades cadastradas em
+   cada empreendimento — assim os números nunca ficam desatualizados. */
 (function(){
-  var buildings = document.querySelectorAll('.building');
+  function parseArea(unit){
+    var el = unit.querySelector('.unit-type');
+    var m = el && el.textContent.match(/([\d.,]+)\s*m²/);
+    if(!m) return null;
+    return parseFloat(m[1].replace(/\./g, '').replace(',', '.'));
+  }
+  function parsePrice(unit){
+    var el = unit.querySelector('.unit-new');
+    if(!el) return null;
+    var clean = el.textContent.replace(/[^\d,]/g, '').replace(',', '.');
+    var n = parseFloat(clean);
+    return isNaN(n) ? null : n;
+  }
+  function fmtArea(n){
+    var r = Math.round(n * 100) / 100;
+    return (r % 1 === 0 ? String(r) : r.toFixed(2).replace(/0$/, '')).replace('.', ',');
+  }
+  function fmtPrice(n){ return n.toLocaleString('pt-BR', { maximumFractionDigits:0 }); }
+  function setAll(key, stat, text){
+    document.querySelectorAll('[data-stat-for="'+key+'"][data-stat="'+stat+'"]').forEach(function(el){ el.textContent = text; });
+  }
+
+  document.querySelectorAll('.dev-modal-backdrop[data-building]').forEach(function(modal){
+    var key = modal.id.replace(/^modal-/, '');
+    var units = modal.querySelectorAll('.unit-card');
+    var areas = [], prices = [], quartos = [], dests = [];
+    units.forEach(function(u){
+      var a = parseArea(u); if(a !== null) areas.push(a);
+      var p = parsePrice(u); if(p !== null) prices.push(p);
+      var q = u.getAttribute('data-quartos'); if(q) quartos.push(parseInt(q, 10));
+      var d = u.getAttribute('data-dest'); if(d && dests.indexOf(d) === -1) dests.push(d);
+    });
+    if(areas.length){
+      var aMin = Math.min.apply(null, areas), aMax = Math.max.apply(null, areas);
+      setAll(key, 'area', (aMin === aMax ? fmtArea(aMin) : fmtArea(aMin) + ' a ' + fmtArea(aMax)) + ' m²');
+    }
+    if(quartos.length){
+      var qMin = Math.min.apply(null, quartos), qMax = Math.max.apply(null, quartos);
+      setAll(key, 'quartos', (qMin === qMax ? String(qMin) : qMin + ' a ' + qMax));
+    }
+    if(prices.length){ setAll(key, 'price', fmtPrice(Math.min.apply(null, prices))); }
+    var badgeWraps = document.querySelectorAll('[data-badges-for="'+key+'"]');
+    badgeWraps.forEach(function(wrap){
+      dests.forEach(function(d){
+        var span = document.createElement('span');
+        span.className = 'dev-badge';
+        span.textContent = d;
+        wrap.appendChild(span);
+      });
+    });
+  });
+})();
+
+/* Abrir/fechar os modais de detalhe dos empreendimentos */
+(function(){
+  var backdrops = document.querySelectorAll('.dev-modal-backdrop');
+  function closeAll(){
+    backdrops.forEach(function(bd){ bd.classList.remove('open'); });
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('[data-open-modal]').forEach(function(trigger){
+    trigger.addEventListener('click', function(e){
+      e.preventDefault();
+      var id = trigger.getAttribute('data-open-modal');
+      var modal = document.getElementById(id);
+      if(!modal) return;
+      closeAll();
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      modal.scrollTop = 0;
+    });
+  });
+  backdrops.forEach(function(bd){
+    bd.addEventListener('click', function(e){ if(e.target === bd) closeAll(); });
+    bd.querySelectorAll('[data-close-modal]').forEach(function(btn){ btn.addEventListener('click', closeAll); });
+  });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAll(); });
+})();
+
+(function(){
+  var buildings = document.querySelectorAll('.dev-modal-backdrop[data-building]');
   var emptyState = document.getElementById('emptyState');
   var emptyLink = document.getElementById('emptyLink');
   var result = document.getElementById('spResult');
@@ -1064,7 +1326,10 @@ if(!reduce){
         card.style.display = show ? '' : 'none';
         if(show){ visible++; count++; }
       });
-      b.style.display = visible ? '' : 'none';
+      var card = document.querySelector('.dev-card[data-open-modal="' + b.id + '"]');
+      if(card) card.style.display = visible ? '' : 'none';
+      var jump = document.querySelector('.quick-jump button[data-open-modal="' + b.id + '"]');
+      if(jump) jump.style.display = visible ? '' : 'none';
     });
 
     var active = anyFilter();
